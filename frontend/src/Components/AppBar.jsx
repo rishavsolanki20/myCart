@@ -44,7 +44,7 @@ export default function AppBar() {
 
   return (
     <div className="shadow h-14 flex justify-between items-center">
-      <div className="ml-4">myTracker</div>
+      <div className="ml-4">myCart</div>
       <div className="flex items-center">
         <div className="flex flex-col justify-center mr-4">{firstName}</div>
         <button

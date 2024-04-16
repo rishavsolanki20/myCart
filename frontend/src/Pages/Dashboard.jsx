@@ -44,12 +44,12 @@ const Dashboard = () => {
   // Function to handle checkout
   const handleCheckout = () => {
     // Send a request to backend to add items to cart
-    axios.get('http://localhost:8080/checkout', {
-      items: cartItems.map(item => ({ name: item.title, status: 'pending' }))
+    axios.post('http://localhost:9000/carts', { username: "exampleUser",
+      items: cartItems.map(item => ({ name: item.title, price: item.price }))
     })
     .then((response) => {
-      // Navigate to the cart page
-      navigate('/cart');
+      console.log(response);
+      // navigate('/cart');
     })
     .catch((error) => {
       console.error('Failed to add items to cart:', error);

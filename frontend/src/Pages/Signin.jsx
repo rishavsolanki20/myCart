@@ -15,29 +15,36 @@ export default function Signin() {
 
   const handleSignIn = async (event) => {
     event.preventDefault();
-  
+
     try {
-      const formData = new URLSearchParams();
-      formData.append("username", username);
-      formData.append("password", password);
-  
-      console.log(formData);
-      const response = await axios.post("http://localhost:8080/signin", formData.toString(), {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      });
-  
-      if (response.status === 200) {
-        // Successful sign-in
-        navigate("/dashboard"); // Redirect to home page
-      } else {
-        throw new Error("Invalid username or password");
-      }
+        const requestData = {
+            username: username,
+            password: password,
+        };
+
+        console.log(requestData); // Log requestData to verify the username value
+
+        const response = await axios.post(
+            "http://localhost:9000/users/login",
+            requestData,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            }
+        );
+
+        console.log(response.data);
+
+        localStorage.setItem("username", response.data.username);
+        navigate("/dashboard");
     } catch (error) {
-      setErrorMessage(error.message);
+        setErrorMessage(error.message);
     }
-  };
+};
+
+
+  
   
   return (
     <div className="bg-slate-300 h-screen flex flex-col justify-center items-center">

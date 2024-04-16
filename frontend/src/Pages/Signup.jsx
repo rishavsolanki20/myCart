@@ -18,27 +18,33 @@ export default function Signup() {
     e.preventDefault();
 
     try {
-        const formData = new URLSearchParams();
-        formData.append('username', username);
-        formData.append('password', password);
+        const userData = {
+            username: username,
+            password: password
+        };
 
-        const response = await fetch('http://localhost:8080/signup', {
+        const response = await fetch('http://localhost:9000/users', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
+                'Content-Type': 'application/json' // Specify JSON content type
             },
-            body: formData.toString(),
+            body: JSON.stringify(userData) // Convert userData object to JSON string
         });
 
+        const responseData = await response.json(); // Extract response JSON
         if (response.ok) {
             // Handle successful sign-up
             console.log('Sign-up successful');
+            setSignupSuccess(true);
+            navigate('/');
         } else {
             // Handle sign-up failure
-            console.error('Sign-up failed');
+            console.error('Sign-up failed:', responseData.error); // Log error message
+            setErrorMessage(responseData.error); // Set error message state
         }
     } catch (error) {
         console.error('Error signing up:', error.message);
+        setErrorMessage('An error occurred. Please try again.'); // Set generic error message
     }
 };
 
