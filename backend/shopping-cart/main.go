@@ -84,7 +84,7 @@ func main() {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"data": user})
+		c.JSON(http.StatusOK, gin.H{"username": user.Username, "data": user})
 	})
 
 	r.POST("/carts", func(c *gin.Context) {
